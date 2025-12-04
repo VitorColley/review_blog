@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
   before_action :require_login, except: [:index, :show, :top]
+  before_action :require_owner_or_admin, only: [:edit, :update, :destroy] 
 
   def index
     @reviews = Review.includes(:item, :user).order(created_at: :desc)

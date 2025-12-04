@@ -8,4 +8,8 @@ class User < ApplicationRecord
   def authenticate(password)
     self.password == password
   end
+
+  def admin?
+    self.admin
+  end
 end

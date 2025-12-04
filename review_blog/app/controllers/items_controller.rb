@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  #prevents repetition of code by setting the item for specific actions
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:destroy, :edit, :update]
 
   def index
     @items = Item.all.order(:title)
@@ -41,6 +41,12 @@ class ItemsController < ApplicationController
   private
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def require_admin
+    unless current_user&.admin?
+      redirect_to root_path, alert: "You are not authorized to access this page."
+    end
   end
 
   def item_params

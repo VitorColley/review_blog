@@ -3,6 +3,15 @@
 <p>Creator: <%= @item.creator_name %></p>
 <p>Year: <%= @item.year %></p>
 
+<% if current_user&.admin? %>
+  <p>
+    <%= link_to "Edit Item", edit_item_path(@item) %> |
+    <%= link_to "Delete Item", 
+                item_path(@item),
+                data: { turbo_method: :delete, turbo_confirm: "Delete this item?" } %>
+  </p>
+<% end %>
+
 <h2>Reviews</h2>
 <% @reviews.each do |review| %>
   <p>

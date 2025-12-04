@@ -25,7 +25,8 @@ puts "Seeding database..."
 users = [
   {username: "alice", email: "alice@example.com", password: "password"},
   {username: "bob", email: "bob@example.com", password: "password"},
-  {username: "carol", email: "carol@example.com", password: "password"}
+  {username: "carol", email: "carol@example.com", password: "password"},
+  {username: "admin", email: "admin@example.com", password: "adminpassword", admin: true}
 ]
 
 users.each do |u|
