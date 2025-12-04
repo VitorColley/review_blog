@@ -1,0 +1,13 @@
+<h1><%= @item.title %></h1>
+<p>Category: <%= @item.category.name %></p>
+<p>Creator: <%= @item.creator_name %></p>
+<p>Year: <%= @item.year %></p>
+
+<h2>Reviews</h2>
+<% @reviews.each do |review| %>
+  <p>
+    <%= link_to review.title, review_path(review) %> (Rating: <%= review.rating %>)
+  </p>
+<% end %>
+
+<%= link_to "Add Review", new_review_path %>

@@ -1,0 +1,29 @@
+<%= form_with model: @review, local: true do |f| %>
+  <p>
+    <%= f.label :item_id, "Item" %><br>
+    <%= f.collection_select :item_id, Item.all, :id, :title %>
+  </p>
+
+  <p>
+    <%= f.label :rating %><br>
+    <%= f.number_field :rating, in: 1..5 %>
+  </p>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :body %><br>
+    <%= f.text_area :body %>
+  </p>
+
+  <p>
+    <%= f.label :tag_ids, "Tags" %><br>
+    <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
+  </p>
+
+  <%= f.submit %>
+<% end %>
+

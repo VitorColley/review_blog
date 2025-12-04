@@ -1,0 +1,9 @@
+<h1>Tag: <%= @tag.name %></h1>
+<h2>Reviews with this tag:</h2>
+<ul>
+  <% @reviews.each do |review| %>
+    <li>
+      <%= link_to review.title, review_path(review) %> (Rating: <%= review.rating %>)
+    </li>
+  <% end %>
+</ul>

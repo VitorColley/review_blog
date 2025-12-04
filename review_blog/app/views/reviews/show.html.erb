@@ -1,0 +1,27 @@
+<h1><%= @review.title %></h1>
+<p>Rating: <%= @review.rating %></p>
+<p>Item: <%= link_to @review.item.title, item_path(@review.item) %></p>
+<p>Author: <%= link_to @review.user.username, user_path(@review.user) %></p>
+<p><%= @review.body %></p>
+
+<h2>Comments</h2>
+<% @comments.each do |comment| %>
+  <p>
+    <strong><%= comment.user.username %>:</strong> <%= comment.body %>
+    <% if current_user == comment.user %>
+      <%= link_to "Delete", review_comment_path(@review, comment), method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
+  </p>
+<% end %>
+
+<% if current_user %>
+  <h3>Add a comment</h3>
+  <%= form_with model: [@review, @comment], local: true do |f| %>
+    <p>
+      <%= f.text_area :body %>
+    </p>
+    <%= f.submit "Post Comment" %>
+  <% end %>
+<% end %>
+
+<%= link_to "Back to Item", item_path(@review.item) %>

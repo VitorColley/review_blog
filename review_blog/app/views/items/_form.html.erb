@@ -1,0 +1,28 @@
+<%= form_with model: @item, local: true do |f| %>
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :category_id, "Category" %><br>
+    <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "Select a Category" %>
+  </p>
+
+  <p>
+    <%= f.label :year %><br>
+    <%= f.number_field :year %>
+  </p>
+
+  <p>
+    <%= f.label :creator_name, "Creator / Director / Author / Chef" %><br>
+    <%= f.text_field :creator_name %>
+  </p>
+
+  <p>
+    <%= f.label :image_url, "Image URL" %><br>
+    <%= f.text_field :image_url %>
+  </p>
+
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,10 @@
+<h1>All Reviews</h1>
+<%= link_to "New Review", new_review_path %>
+
+<% @reviews.each do |review| %>
+  <div>
+    <h2><%= link_to review.title, review_path(review) %></h2>
+    <p>Rating: <%= review.rating %> | Item: <%= link_to review.item.title, item_path(review.item) %> | Author: <%= link_to review.user.username, user_path(review.user) %></p>
+  </div>
+  <hr>
+<% end %>

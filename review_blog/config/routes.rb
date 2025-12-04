@@ -11,4 +11,35 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # Home page
+  root "reviews#index"
+
+  # User registration
+  resources :users, only: [:new, :create, :show]
+
+  # Login / Logout
+  get    "/login",  to: "sessions#new"
+  post   "/login",  to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
+
+  # Categories
+  resources :categories, only: [:index, :show]
+
+  # Items (movies, games, etc.)
+  resources :items
+
+  # Reviews with nested comments
+  resources :reviews do
+    resources :comments, only: [:create, :destroy]
+
+    # Custom route:
+    collection do
+      get "top"  # /reviews/top
+    end
+  end
+
+  # Tags
+  resources :tags, only: [:index, :show]
+
 end
