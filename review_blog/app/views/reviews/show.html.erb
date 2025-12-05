@@ -16,7 +16,8 @@
 <h2>Comments</h2>
 <% @comments.each do |comment| %>
   <p>
-    <strong><%= comment.user.username %>:</strong> <%= comment.body %>
+    <!--Used ".html_safe" to allow for XSS attack demonstration, this disables Rails' default escaping of HTML content.-->
+    <strong><%= comment.user.username %>:</strong> <%= comment.body.html_safe %>
     <% if current_user&.admin? || current_user == comment.user %>
       <%= link_to "Delete", review_comment_path(@review, comment),
       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>

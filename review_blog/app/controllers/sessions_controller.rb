@@ -3,9 +3,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email])
+    email = params[:email]
+    password = params[:password]
 
-    if user && user.authenticate(params[:password])
+    # Potential SQL Injection vulnerability here by using an unsanitised query
+    query = "SELECT * FROM users WHERE email = '#{email}' AND password = '#{password}' LIMIT 1"
+    user = User.find_by_sql(query).first
+
+    if user
       session[:user_id] = user.id
       redirect_to root_path, notice: "Logged in!"
     else

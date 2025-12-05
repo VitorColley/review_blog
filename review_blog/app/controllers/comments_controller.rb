@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
   before_action :require_login
   before_action :set_comment, only: [:destroy]
-  before_action :require_owner_or_admin, only: [:destroy]
 
   def create
     @review = Review.find(params[:review_id])

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   post   "/login",  to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  # Search
+  get "/search", to: "reviews#search"
+
   # Categories
   resources :categories, only: [:index, :show]
 

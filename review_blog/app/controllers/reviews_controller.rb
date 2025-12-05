@@ -44,6 +44,12 @@ class ReviewsController < ApplicationController
     redirect_to reviews_path, notice: "Review deleted!"
   end
 
+  #search action
+  def search
+    @query = params[:q]
+    @results = Review.where("title LIKE ?", "%#{params[:q]}%")
+  end
+
   private
 
   def set_review
