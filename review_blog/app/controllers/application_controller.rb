@@ -12,6 +12,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def require_login
+    unless current_user
+      redirect_to login_path, alert: "You must be logged in."
+    end
+  end
+
     #Logic to restrict review editing/deleting to owner or admin(Least Privilege Principle)
   def require_owner_or_admin
     # Allow if current_user is admin

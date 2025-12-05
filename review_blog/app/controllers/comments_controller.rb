@@ -28,20 +28,6 @@ class CommentsController < ApplicationController
   def set_comment
     @comment = Comment.find(params[:id])
   end
-
-  def require_owner_or_admin
-    return if current_user&.admin?
-    
-    if @comment.user != current_user
-      redirect_to @comment.review, alert: "You are not authorized to perform this action."
-    end
-  end
-
-  def require_login
-    unless current_user
-        redirect_to login_path, alert: "Please login first."
-    end
-  end
   
   def comment_params
     params.require(:comment).permit(:body)

@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   resources :reviews do
     resources :comments, only: [:create, :destroy]
 
-    # Custom route:
+    # uninplemented route:
     collection do
       get "top"  # /reviews/top
     end

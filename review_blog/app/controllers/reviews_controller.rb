@@ -54,9 +54,4 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:item_id, :rating, :title, :body, tag_ids: [])
   end
 
-  def require_login
-    unless current_user
-      redirect_to login_path, alert: "You must be logged in."
-    end
-  end
 end
