@@ -1,0 +1,18 @@
+{
+  "name": "review_blog",
+  "version": "1.0.0",
+  "description": "A lightweight Ruby on Rails application for creating and browsing reviews, items, categories, tags and comments. This app uses Rails 8 with importmap/ Propshaft for JavaScript and ships with a simple SQLite development database.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1"
+  }
+}
