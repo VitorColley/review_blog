@@ -10,7 +10,6 @@ run tests
 **Tech stack**
 - **Framework**: Rails 8.1.x
 - **Database (dev/test)**: SQLite (see `config/database.yml`)
-- **JS/Assets**: `importmap-rails`, `propshaft`, Turbo + Stimulus
 - **Server**: Puma
 
 ## Getting started
@@ -19,7 +18,7 @@ Prerequisites
 - Ruby compatible with Rails 8 (use a modern Ruby 3.x interpreter).
 - Bundler (gem bundler)
 
-Recommended: run inside your WSL Ubuntu environment (this repo lives in WSL).
+Recommended: run inside your WSL Ubuntu environment (this repo lives in WSL, I used Ubuntu -24.04).
 
 Quick start (run in WSL/bash):
 
@@ -41,8 +40,25 @@ rails db:create db:migrate db:seed
 Open http://localhost:3000 in your browser.
 
 ## Configuration
-- App configuration lives in `config/` and its environment-specific files
-	(`config/environments/*.rb`).
-- Credentials are managed with Rails encrypted credentials (`config/credentials.yml.enc`).
+- App configuration is in `config/`
 
 ## Testing
+This project includes Playwright end-to-end tests.
+
+- **Prepare test database:** create and migrate the test database before running Rails tests.
+
+```bash
+# from the project root
+bin/rails db:create db:migrate RAILS_ENV=test
+```
+
+- **Playwright (end-to-end) tests:** Playwright tests are in the `tests/` directory. Install Node dependencies and Playwright browsers, then run tests with the Playwright test runner.
+
+```bash
+# install Node deps
+npm install
+# install Playwright browser
+npx playwright install
+# run Playwright tests
+npx playwright test
+```

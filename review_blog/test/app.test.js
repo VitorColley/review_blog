@@ -196,16 +196,19 @@ test('Create Comment (Exceptional - XSS Attack)', async ({ page }) => {
   await page.getByRole('link', { name: 'Reviews' }).click();
   // Click on the review titled "Best RPG ever"
   await page.getByRole('link', { name: 'Great adventure' }).click();
+  
+  // Fill in the comment form
+  await page.locator('#comment_body').click();
+  await page.locator('#comment_body').fill('<script>alert("Hacked!")</script>');
   // Listen for the next dialog message
   page.once('dialog', async (dialog) => {
     const message = dialog.message();
     expect(message).toBe('Hacked!');
     await dialog.accept(); // Accept the alert
   });
-  // Fill in and submit the comment form
-  await page.locator('#comment_body').click();
-  await page.locator('#comment_body').fill('<script>alert("Hacked!")</script>');
+  // Submit the comment
   await page.getByRole('button', { name: 'Post Comment' }).click();
+  await expect(page.getByText('Comment added!')).toBeVisible();
 
   //Delete Comment
   //Listen for the next dialog message
