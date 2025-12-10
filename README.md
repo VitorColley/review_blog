@@ -1,8 +1,7 @@
 # review_blog
 
 A lightweight Ruby on Rails application for creating and browsing reviews,
-items, categories, tags and comments. This app uses Rails 8 with importmap/
-Propshaft for JavaScript and ships with a simple SQLite development database.
+items, categories, tags and comments. This app uses Rails 8 with a simple SQLite development database.
 
 **This README** documents how to get the application running locally and how to 
 run tests
