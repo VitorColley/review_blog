@@ -12,11 +12,11 @@ test('Login (Normal), View Profile and Logout', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Email' }).click();
   await page.getByRole('textbox', { name: 'Email' }).fill('alice@example.com');
   await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('password');
+  await page.getByRole('textbox', { name: 'Password' }).fill('@Password123');
   // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
+  await page.getByRole('button', { name: 'Sign in' }).click();
   // Verify successful login
-  await expect(page.getByText('Logged in!')).toBeVisible();
+  await expect(page.getByText('Logged in successfully.')).toBeVisible();
 
   //View Profile
   // Navigate to the profile page
@@ -32,8 +32,6 @@ test('Login (Normal), View Profile and Logout', async ({ page }) => {
   });
   // Click the logout link
   await page.getByRole('link', { name: 'Logout' }).click();
-  // Verify successful logout
-  await expect(page.getByText('Logged out!')).toBeVisible();
 });
 
 test('Login (Alternative - Missing Field)', async ({ page }) => {
@@ -43,13 +41,14 @@ test('Login (Alternative - Missing Field)', async ({ page }) => {
   await page.getByRole('link', { name: 'Login' }).click();
   // Fill in only the email field
   await page.getByRole('textbox', { name: 'Email' }).click();
-  await page.getByRole('textbox', { name: 'Email' }).click();
   await page.getByRole('textbox', { name: 'Email' }).fill('alice@example.com');
   // Leave the password field empty
+  await page.getByRole('textbox', { name: 'Password' }).click();
+  await page.getByRole('textbox', { name: 'Password' }).fill('1234');
   // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
+  await page.getByRole('button', { name: 'Sign in' }).click();
   // Verify error message for missing password
-  await expect(page.getByText('Invalid email or password')).toBeVisible();
+  await expect(page.getByText('Try another email address or password.').first()).toBeVisible();
 });
 
 test('Login (Exceptional - SQL Injection)', async ({ page }) => {
@@ -59,28 +58,18 @@ test('Login (Exceptional - SQL Injection)', async ({ page }) => {
   await page.getByRole('link', { name: 'Login' }).click();
   // Attempt SQL injection in the email field
   await page.getByRole('textbox', { name: 'Email' }).click();
-  await page.getByRole('textbox', { name: 'Email' }).fill('\' OR \'x\'=\'x\' -- ');
+  await page.getByRole('textbox', { name: 'Email' }).fill("user@example.com");
   // Fill in the password field with arbitrary data
   await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('anything');
+  await page.getByRole('textbox', { name: 'Password' }).fill("'$password = 1' or '1' = '1'");
   // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
-  // Verify that login was successful (indicating vulnerability)
-  await expect(page.getByText('Logged in!')).toBeVisible();
-
-  //Logout
-  // Listen for the next dialog message
-  page.once('dialog', async (dialog) => {
-    console.log(`Dialog message: ${dialog.message()}`);
-    await dialog.accept(); // Accept the confirmation (click "OK")
-  });
-  // Click the logout link
-  await page.getByRole('link', { name: 'Logout' }).click();
-  // Verify successful logout
-  await expect(page.getByText('Logged out!')).toBeVisible();
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  // Verify that login was unsuccessful
+  await expect(page.getByText('Try another email address or password.').first()).toBeVisible();
 });
 
 test('Create Review (Normal) and Delete Review', async ({ page }) => {
+  //Login
   // Navigate to the main page
   await page.goto(BASE_URL);
   // Click on the login link
@@ -89,10 +78,11 @@ test('Create Review (Normal) and Delete Review', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Email' }).click();
   await page.getByRole('textbox', { name: 'Email' }).fill('alice@example.com');
   await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('password');
+  await page.getByRole('textbox', { name: 'Password' }).fill('@Password123');
   // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page.getByText('Logged in!')).toBeVisible();
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  // Verify successful login
+  await expect(page.getByText('Logged in successfully.')).toBeVisible();
   // Click on Reviews and New Review
   await page.getByRole('link', { name: 'Reviews' }).click();
   await page.getByRole('link', { name: 'New Review' }).click();
@@ -119,6 +109,7 @@ test('Create Review (Normal) and Delete Review', async ({ page }) => {
 });
 
 test('Create Comment (Normal), Delete Comment', async ({ page }) => {
+  //Login
   // Navigate to the main page
   await page.goto(BASE_URL);
   // Click on the login link
@@ -127,14 +118,15 @@ test('Create Comment (Normal), Delete Comment', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Email' }).click();
   await page.getByRole('textbox', { name: 'Email' }).fill('alice@example.com');
   await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('password');
+  await page.getByRole('textbox', { name: 'Password' }).fill('@Password123');
   // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page.getByText('Logged in!')).toBeVisible();
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  // Verify successful login
+  await expect(page.getByText('Logged in successfully.')).toBeVisible();
   // Navigate to the specific review
   await page.getByRole('link', { name: 'Reviews' }).click();
-  // Click on the review titled "Great Game!"
-  await page.getByRole('link', { name: 'Great Game!' }).click();
+  // Click on the review titled "Best RPG ever"
+  await page.getByRole('link', { name: 'Best RPG ever' }).click();
   // Fill in and submit the comment form
   await page.locator('#comment_body').click();
   await page.locator('#comment_body').fill('Test Comment');
@@ -157,6 +149,7 @@ test('Create Comment (Normal), Delete Comment', async ({ page }) => {
 });
 
 test('Create Comment (Alternative - Missing Field)', async ({ page }) => {
+  //Login
   // Navigate to the main page
   await page.goto(BASE_URL);
   // Click on the login link
@@ -165,14 +158,15 @@ test('Create Comment (Alternative - Missing Field)', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Email' }).click();
   await page.getByRole('textbox', { name: 'Email' }).fill('alice@example.com');
   await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('password');
+  await page.getByRole('textbox', { name: 'Password' }).fill('@Password123');
   // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page.getByText('Logged in!')).toBeVisible();
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  // Verify successful login
+  await expect(page.getByText('Logged in successfully.')).toBeVisible();
   // Navigate to the specific review
   await page.getByRole('link', { name: 'Reviews' }).click();
   // Click on the review titled "Best RPG ever"
-  await page.getByRole('link', { name: 'Great adventure' }).click();
+  await page.getByRole('link', { name: 'Best RPG ever' }).click();
   //Submit the comment form
   await page.getByRole('button', { name: 'Post Comment' }).click();
   // Verify the comment error message
@@ -180,6 +174,7 @@ test('Create Comment (Alternative - Missing Field)', async ({ page }) => {
 
 });
 test('Create Comment (Exceptional - XSS Attack)', async ({ page }) => {
+  //Login
   // Navigate to the main page
   await page.goto(BASE_URL);
   // Click on the login link
@@ -188,27 +183,23 @@ test('Create Comment (Exceptional - XSS Attack)', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Email' }).click();
   await page.getByRole('textbox', { name: 'Email' }).fill('alice@example.com');
   await page.getByRole('textbox', { name: 'Password' }).click();
-  await page.getByRole('textbox', { name: 'Password' }).fill('password');
+  await page.getByRole('textbox', { name: 'Password' }).fill('@Password123');
   // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
-  await expect(page.getByText('Logged in!')).toBeVisible();
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  // Verify successful login
+  await expect(page.getByText('Logged in successfully.')).toBeVisible();
   // Navigate to the specific review
   await page.getByRole('link', { name: 'Reviews' }).click();
   // Click on the review titled "Best RPG ever"
-  await page.getByRole('link', { name: 'Great adventure' }).click();
+  await page.getByRole('link', { name: 'Best RPG ever' }).click();
   
   // Fill in the comment form
   await page.locator('#comment_body').click();
   await page.locator('#comment_body').fill('<script>alert("Hacked!")</script>');
-  // Listen for the next dialog message
-  page.once('dialog', async (dialog) => {
-    const message = dialog.message();
-    expect(message).toBe('Hacked!');
-    await dialog.accept(); // Accept the alert
-  });
   // Submit the comment
   await page.getByRole('button', { name: 'Post Comment' }).click();
   await expect(page.getByText('Comment added!')).toBeVisible();
+  await expect(page.getByText('<script>alert("Hacked!")</script>')).toBeVisible();
 
   //Delete Comment
   //Listen for the next dialog message

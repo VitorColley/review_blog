@@ -23,7 +23,7 @@ Recommended: run inside your WSL Ubuntu environment (this repo lives in WSL, I u
 Quick start (run in WSL/bash):
 
 ```bash
-# clone (if you haven't already)
+# clone
 git clone <your-repo-url> review_blog
 cd review_blog
 

@@ -14,17 +14,18 @@
 <% end %>
 
 <h2>Comments</h2>
+
 <% @comments.each do |comment| %>
   <p>
-    <strong><%= comment.user.username %>:</strong> <%= comment.body.html_safe %>
-    <% if current_user&.admin? || current_user == comment.user %>
+    <strong><%= comment.user.username %>:</strong> <%= comment.body%>
+    <% if current_user&.admin? || current_user&.id == comment.user_id %>
       <%= link_to "Delete", review_comment_path(@review, comment),
       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
     <% end %>
   </p>
 <% end %>
 
-<% if current_user %>
+<% if authenticated? %>
   <h3>Add a comment</h3>
   <%= form_with model: [@review, @comment], local: true do |f| %>
     <p>

@@ -1,5 +1,4 @@
-<!--Intentional XSS vulnerability for demonstration purposes (raw)-->
-<h1>Search Results for: <%= raw @query %></h1>
+<h1>Search Results for: <%= @query %></h1>
 
 <% @results.each do |r| %>
   <p><%= link_to r.title, r %></p>

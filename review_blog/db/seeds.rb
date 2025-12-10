@@ -23,10 +23,10 @@ puts "Seeding database..."
 # Users
 # -------------------
 users = [
-  {username: "alice", email: "alice@example.com", password: "password"},
-  {username: "bob", email: "bob@example.com", password: "password"},
-  {username: "carol", email: "carol@example.com", password: "password"},
-  {username: "admin", email: "admin@example.com", password: "adminpassword", admin: true}
+  {username: "alice", email_address: "alice@example.com", password: "@Password123"},
+  {username: "bob", email_address: "bob@example.com", password: "@Password123"},
+  {username: "carol", email_address: "carol@example.com", password: "@Password123"},
+  {username: "admin", email_address: "admin@example.com", password: "@Password123", admin: true}
 ]
 
 users.each do |u|

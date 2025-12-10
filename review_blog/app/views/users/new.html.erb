@@ -7,8 +7,8 @@
   </p>
 
   <p>
-    <%= f.label :email %><br>
-    <%= f.email_field :email %>
+    <%= f.label :email_address %><br>
+    <%= f.email_field :email_address %>
   </p>
 
   <p>
@@ -16,16 +16,24 @@
     <%= f.password_field :password %>
   </p>
 
-  <!--
   <p>
     <%= f.label :password_confirmation %><br>
     <%= f.password_field :password_confirmation %>
   </p>
-  -->
+
   <p>
     <%= f.label :bio %><br>
     <%= f.text_area :bio %>
   </p>
+  <% if @user.errors.any? %>
+  <div class="errors" style="color: red;">
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <%= f.submit "Sign Up" %>
 <% end %>
